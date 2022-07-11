@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Komputer Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/api.js"></script>
+    <script src="js/money.js"></script>
+  </head>
+  <body onkeypress="return event.keyCode != 13;">
+    <!-- navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+      <h1 id="title">Komputer Store</h1>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+
+        <!-- banker -->
+        <div class="col-sm-4">
+          <div class="card" style="width: 19rem">
+            <div class="card-body shadow-lg p-3 mb-5 bg-white rounded">
+              <h4 class="card-title">Joe Banker</h5>
+                <!-- balance -->
+              <div id="bank_amount">
+                <div style="margin-left:2rem" class="amount align-text-center">
+                  <p class="card-text" style="margin-right: 105px">Balance</p>
+                  <p class="card-text" id="bank_balance"></p>
+                </div>
+                <!-- Alert -->
+                <div id="debt" style="margin-left:2rem" class="amount align-text-center">
+                </div>
+              </div>
+              <!-- button to (trigger modal) -->
+              <button id="loan" type="button" class="btn btn-success" data-toggle="modal" data-target="#debtModal">Get a loan</button>
+              <!-- modal -->
+              <div class="modal fade" id="debtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <!-- header -->
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Amount to Borrow</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <!-- content -->
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label id="modal-message" class="col-form-label">Hello Joe!<br>How much would you like to borrow?</label>
+                          <input  type="text" class="form-control" id="requested_debt">
+                        </div>
+                      </form>
+                    </div>
+                    <!-- buttons -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button onclick="loan()" type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- worker -->
+        <div class="col-sm-4">
+          <div class="card" style="width: 19rem">
+            <div class="card-body shadow-lg p-3 mb-5 bg-white rounded">
+              <h4 class="card-title">Work</h5>
+                <!-- balance -->
+                <div style="margin-left:3rem" class="amount align-text-center">
+                  <p class="card-text" style="margin-right: 120px">Pay</p>
+                  <p id="work_balance" class="card-text" ></p>
+                </div>
+              <br />
+              <br />
+              <!-- buttons -->
+              <div id="buttons" class="amount" style="justify-content: space-evenly">
+                <a onclick="bank()" class="btn btn-warning">Bank</a>
+                <a onclick="work()" class="btn btn-primary" style="color: white;">Work</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="z-index: 1;" class="col-sm-4">
+          <div class="flip-card-3D-wrapper">
+            <div id="flip-card">
+              <div class="flip-card-front">        
+                <div class="col-sm-4">
+                <div class="card" id="feature"style="width: 19rem">
+                  <div class="card-body shadow-lg p-3 mb-5 bg-white rounded" >
+                    <h4 class="card-title">Laptops</h5>
+                      <!-- dropdown -->
+                    <div class="dropdown">
+                        <button
+                          class="btn btn-outline-dark dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style="margin-top: 1rem;"
+                        > 
+                            <a id="chosenLaptop">Choose a laptop</a>
+                        </button>
+                        <ul id="laptop-options" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                  
+                    </div> 
+                    <!-- Hover specs -->
+                    <div id="front_card">
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <button id="flip-card-btn-turn-to-back">Specs</button>
+              </div>
+              <div  class="flip-card-back">
+
+                <button class="" id="flip-card-btn-turn-to-front">
+                  Specs
+                </button>
+                <div id="specs">                    
+                    <!-- Hover specs -->
+                  </div>
+                  <div id="back_card">
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="messages">
+        <!-- Errors/Success -->
+      </div>
+
+      <div class="row" style="margin-top: 0rem;">
+        <div class="col-sm">
+          <div id="selected-laptop" class="card">
+          <!-- This is where a selected laptop is generated-->
+          </div>  
+        </div>
+      </div>
+    </div>
+    
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(event) {
+
+        document.getElementById('flip-card-btn-turn-to-back').style.visibility = 'visible';
+        document.getElementById('flip-card-btn-turn-to-front').style.visibility = 'visible';
+
+        document.getElementById('flip-card-btn-turn-to-back').onclick = function() {
+        document.getElementById('flip-card').classList.toggle('do-flip');
+        };
+
+        document.getElementById('flip-card-btn-turn-to-front').onclick = function() {
+        document.getElementById('flip-card').classList.toggle('do-flip');
+        };
+
+        });
+    </script>
+  </body>
+</html>
