@@ -1,8 +1,8 @@
 {
-    "name": "myapp",
-    "description": "a really cool app",
+    "name": "komputer",
+    "description": "buy laptops",
     "version": "1.0.0",
     "engines": {
-      "node": "6.11.1"
+      "node": "12.16.1"
     }
   }
